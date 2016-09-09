@@ -1,0 +1,32 @@
+{
+  "name": "runman",
+  "version": "0.0.1",
+  "description": "Runtime (external) Managers for NodeJS.",
+  "main": "runman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victoryforphil/runman.git"
+  },
+  "keywords": [
+    "runtime",
+    "managers",
+    "manager",
+    "class",
+    "moduel",
+    "npm",
+    "import",
+    "dynamic"
+  ],
+  "author": "Alex Carter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victoryforphil/runman/issues"
+  },
+  "homepage": "https://github.com/victoryforphil/runman#readme",
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
+}
