@@ -22,11 +22,29 @@ describe('load', function(){
     })
   });
 
-  it('should throw no error is name is passed',function(){
+  it('should throw error if parent is null',function(){
     var runman = require("./runman.js");
+
     runman.load("TestMan",{},function(err){
+      expect(err).to.equal("NO_PARENT");
+    })
+  });
+  it('should throw no error',function(){
+    var runman = require("./runman.js");
+    var _parent = {};
+    runman.load("TestMan",{parent: _parent},function(err){
       expect(err).to.be.undefined;
     })
+  });
+
+  it('should load the manager into parent',function(){
+    var runman = require("./runman.js");
+    var _parent = {};
+    runman.load("TestMan",{parent: _parent},function(err){
+
+    });
+    console.log("Parent:" + _parent);
+    expect(_parent.TestMan).to.not.be.undefined;
   });
 
 });

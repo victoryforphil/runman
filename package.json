@@ -28,5 +28,8 @@
   "homepage": "https://github.com/victoryforphil/runman#readme",
   "devDependencies": {
     "chai": "^3.5.0"
+  },
+  "dependencies": {
+    "merge": "^1.2.0"
   }
 }
