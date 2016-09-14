@@ -15,14 +15,13 @@ var npmInstallOptions = {
 };
 var defaults = {
     array: false,
-    arrayName: "managers".
-    npmInstall: false,
+    arrayName: "managers",
+    tryNpm: true,
     localPath: "./",
-    isLocal: true
 };
 
 RunMan.load = function(name, filename, settings, cb) {
-  console.log("[RunMan] Loading Manager: " + name);
+    console.log("[RunMan] Loading Manager: " + name);
     if (!name) {
         cb("NO_NAME");
         return;
@@ -42,91 +41,86 @@ RunMan.load = function(name, filename, settings, cb) {
         return;
     }
 
-    // Creates Path
-    var requirePath = filename;
-    if (_settings.isLocal) {
-        requirePath = _settings.localPath + filename + ".js";
-    }
+    // Creates Local Path
+    var requirePath = _settings.localPath + filename + ".js";
+
     var npmPack;
     try {
-
-        // a path we KNOW is totally bogus and not a module
         npmPack = require(requirePath)
-        console.log("[RunMan] Found NPM. Creating Instance");
-        //Creates Instance
-        var manInstance = new npmPack();
-        if (!manInstance) {
-            cb("INSTANCE_FAILED");
-            return;
-        }
-
-        // Loads Instance into Array or Object
-        if (_settings.array) {
-            _settings.parent.managers = [];
-            manInstance.name = name;
-            _settings.parent.managers.push(manInstance);
-        } else {
-            _settings.parent[name] = manInstance;
-        }
-
-        console.log("[RunMan] Instance Created.");
-        cb();
-
+        console.log("[RunMan] Found Local. (" + requirePath + ")");
     } catch (e) {
-      console.log("[RunMan] Failed to require NPM Package. ("+requirePath+")");
-      if (_settings.installNPM) {
-          console.log("[RunMan] Installing via NPM.");
-          npmInstallOptions.name = filename;
-
-          npmi(npmInstallOptions, function(err, result) {
-              if (err) {
-                  if (err.code === npmi.LOAD_ERR) console.log('[RunMan] NPM Load Error.');
-                  else if (err.code === npmi.INSTALL_ERR) console.log(' [RunMan] NPM install error');
-                  return console.log(err.message);
-              }
-
-              // installed
-              console.log("[RunMan] Downloaded NPM Package. Creating...");
-
-              var npmPack = require(filename);
-
-              if (!npmPack) {
-                  cb("REQUIRE_FAILED");
-                  return;
-              }
-
-              // Creates Instance
-              var manInstance = new npmPack();
-              if (!manInstance) {
-                  cb("INSTANCE_FAILED");
-                  return;
-              }
-
-              // Loads Instance into Array or Object
-              if (_settings.array) {
-                  _settings.parent[_settings.arrayName] = [];
-                  manInstance.name = name;
-                  _settings.parent[_settings.arrayName].push(manInstance);
-              } else {
-                  _settings.parent[name] = manInstance;
-              }
-              console.log("[RunMan] Created Manager");
-              cb();
-
-          });
-      } else {
-          //If it failed to import, and installNPM = false, throw error;
-          cb("REQUIRE_FAILED");
-          return;
-      }
+        console.log("[RunMan] Failed to find locally. (" + requirePath + ")");
     }
 
+    try {
+        npmPack = require(filename)
+        console.log("[RunMan] Found Npm. (" + filename + ")");
+    } catch (e) {
+        console.log("[RunMan] Failed to find NPM. (" + filename + ")");
+    }
 
+    if(!npmPack){
+      if (_settings.tryNpm) {
+          InstallNPM(npmInstallOptions, filename, function(pack){
+            CreateInstance(name,pack, _settings, cb);
+            return;
+          });
+      }else{
+          cb("NOT_FOUND");
+      }
+    }else{
+        CreateInstance(name, npmPack, _settings, cb);
+        return;
+    }
 
 
 
 }
 
+function CreateInstance(name, npmPack, settings, callback) {
+    if (!npmPack) {
+        callback("REQUIRE_FAILED");
+        return;
+    }
+    console.log("[RunMan] Creating Instance");
+    //Creates Instance
+    var manInstance = new npmPack();
+    if (!manInstance) {
+        callback("INSTANCE_FAILED");
+        return;
+    }
 
+    // Loads Instance into Array or Object
+    if (settings.array) {
+        settings.parent.managers = [];
+        manInstance.name = name;
+        settings.parent.managers.push(manInstance);
+    } else {
+        settings.parent[name] = manInstance;
+    }
+
+    console.log("[RunMan] Instance Created.");
+    callback();
+}
+
+function InstallNPM(options, filename, callback) {
+    console.log("[RunMan] Installing via NPM.");
+    options.name = filename;
+
+    npmi(options, function(err, result) {
+        if (err) {
+            if (err.code === npmi.LOAD_ERR) console.log('[RunMan] NPM Load Error.');
+            else if (err.code === npmi.INSTALL_ERR) console.log(' [RunMan] NPM install error');
+            callback(err.msg);
+        }
+        // installed
+        console.log("[RunMan] Downloaded NPM Package. Creating...");
+
+        var npmPack = require(filename);
+
+        callback(npmPack);
+    });
+    return;
+}
 
 module.exports = RunMan;

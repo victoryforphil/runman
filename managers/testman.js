@@ -1,11 +1,10 @@
-class TestMan{
+class TestMan {
   constructor(){
-    console.log("constructor!");
+
   }
 
   TestFunction(){
-    return("Test!");
+    return "TEST!";
   }
 }
-
 module.exports = TestMan;
