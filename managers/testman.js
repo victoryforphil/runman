@@ -3,10 +3,6 @@ class TestMan{
     console.log("constructor!");
   }
 
-  OnLoad(){
-    console.log("On Loaded!");
-  }
-
   TestFunction(){
     return("Test!");
   }

@@ -29,3 +29,26 @@ Runtime, external, managers for NodeJS.
     console.log(parentObject.TestMan.TestFunction());
   });
 ```
+
+##Example Manager (see here as TestMan, also on NPM (runman-testman))
+```js
+class TestMan{
+  constructor(){
+    console.log("constructor!");
+  }
+
+  TestFunction(){
+    return("Test!");
+  }
+}
+
+module.exports = TestMan;
+
+```
+
+##Errors
+`NO_NAME` - No Name Defined
+`NO_FILE_NAME` - No Filename Defined
+`NO_PARENT` - No Parent Object Defined
+`INSTANCE_FAILED` - Failed to create class
+`REQUIRE_FAILED` - Failed to load manager
