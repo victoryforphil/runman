@@ -47,8 +47,9 @@ module.exports = TestMan;
 ```
 
 ##Errors
-`NO_NAME` - No Name Defined
-`NO_FILE_NAME` - No Filename Defined
-`NO_PARENT` - No Parent Object Defined
-`INSTANCE_FAILED` - Failed to create class
-`REQUIRE_FAILED` - Failed to load manager
+`NO_NAME` - No Name Defined     
+`NO_FILE_NAME` - No Filename Defined     
+`NO_PARENT` - No Parent Object Defined      
+`INSTANCE_FAILED` - Failed to create class     
+`REQUIRE_FAILED` - Failed to load manager     
+  
