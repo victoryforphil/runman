@@ -15,6 +15,7 @@ var npmInstallOptions = {
 };
 var defaults = {
     array: false,
+    arrayName: "managers".
     npmInstall: false,
     localPath: "./",
     isLocal: true
@@ -103,9 +104,9 @@ RunMan.load = function(name, filename, settings, cb) {
 
               // Loads Instance into Array or Object
               if (_settings.array) {
-                  _settings.parent.managers = [];
+                  _settings.parent[_settings.arrayName] = [];
                   manInstance.name = name;
-                  _settings.parent.managers.push(manInstance);
+                  _settings.parent[_settings.arrayName].push(manInstance);
               } else {
                   _settings.parent[name] = manInstance;
               }
