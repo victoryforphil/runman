@@ -100,7 +100,7 @@ function CreateInstance(name, npmPack, settings, callback) {
     }
 
     console.log("[RunMan] Instance Created.");
-    callback();
+    callback(null, manInstance);
 }
 
 function InstallNPM(options, filename, callback) {

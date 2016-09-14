@@ -14,7 +14,7 @@
   // Param2: Filename- Name of the file (without .js) or npm package
   // Param3: options (see above)
   // Param3: callback (Calls when done or error).
-  runman.load("TestMan","runman-testman",options,function(err){
+  runman.load("TestMan","runman-testman",options,function(err, isnt){
     if(err){
       console.log(err);
       return;
