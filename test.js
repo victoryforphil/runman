@@ -43,8 +43,30 @@ describe('load', function(){
     runman.load("TestMan",{parent: _parent},function(err){
 
     });
-    console.log("Parent:" + _parent);
     expect(_parent.TestMan).to.not.be.undefined;
   });
 
+  it('should load the manager into array',function(){
+    var runman = require("./runman.js");
+    var _parent = {};
+    runman.load("TestMan",{parent: _parent, array: true},function(err){
+
+    });
+    console.log("Parent:" + _parent.managers);
+    expect(_parent.managers[0]).to.have.any.keys('name', 'TestMan');
+  });
+
+
+});
+
+describe('load', function(){
+  it('should be able to call function',function(){
+    var runman = require("./runman.js");
+    var _parent = {};
+    runman.load("TestMan",{parent: _parent, array: false},function(err){
+
+    });
+    expect(_parent.TestMan.TestFunction()).to.equal("Test!");
+
+  });
 });

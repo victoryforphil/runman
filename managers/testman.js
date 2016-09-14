@@ -8,7 +8,7 @@ class TestMan{
   }
 
   TestFunction(){
-    console.log("Test Function!");
+    return("Test!");
   }
 }
 
