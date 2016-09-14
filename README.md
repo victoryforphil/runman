@@ -20,12 +20,13 @@ Runtime, external, managers for NodeJS.
   // Param1: Name- What to name the manager object.
   // Param2: Filename- Name of the file (without .js) or npm package
   // Param3: options (see above)
-  // Param3: callback (Calls when done or error).
-  runman.load("TestMan","runman-testman",options,function(err){
+  // Param3: callback (Calls when done or error) (Retuns Crated Instance).
+  runman.load("TestMan","runman-testman",options,function(err, instance){
     if(err){
       console.log(err);
     }
-    console.log(parentObject.TestMan.TestFunction());
+    console.log("In Parent: " + parentObject.TestMan.TestFunction());
+    console.log("Returned: " + instance.TestFunction());
   });
 ```
 
