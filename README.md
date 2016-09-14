@@ -1,6 +1,6 @@
 # RunMan
 Runtime, external, managers for NodeJS.
-# Disnode [Discord](https://discord.gg/0prrdN1joHCrVhdw)
+#[Discord](https://discord.gg/0prrdN1joHCrVhdw)
 ##Getting Started
 `npm install runman --save`
 
