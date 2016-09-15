@@ -84,7 +84,7 @@ function CreateInstance(name, npmPack, settings, callback) {
     }
     console.log("[RunMan] Creating Instance");
     //Creates Instance
-    var manInstance = new npmPack();
+    var manInstance = new npmPack(settings.params);
     if (!manInstance) {
         callback("INSTANCE_FAILED");
         return;
@@ -92,9 +92,9 @@ function CreateInstance(name, npmPack, settings, callback) {
 
     // Loads Instance into Array or Object
     if (settings.array) {
-        settings.parent.managers = [];
+        settings.parent[settings.arrayName] = [];
         manInstance.name = name;
-        settings.parent.managers.push(manInstance);
+        settings.parent[settings.arrayName].push(manInstance);
     } else {
         settings.parent[name] = manInstance;
     }
