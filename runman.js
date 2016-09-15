@@ -92,7 +92,9 @@ function CreateInstance(name, npmPack, settings, callback) {
 
     // Loads Instance into Array or Object
     if (settings.array) {
-        settings.parent[settings.arrayName] = [];
+        if(!settings.parent[settings.arrayName]){
+          settings.parent[settings.arrayName] = [];
+        }
         manInstance.name = name;
         settings.parent[settings.arrayName].push(manInstance);
     } else {
